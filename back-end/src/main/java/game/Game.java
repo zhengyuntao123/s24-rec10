@@ -65,7 +65,12 @@ public class Game {
         List<Game> newHistory = new ArrayList<>(this.history);
         newHistory.add(this);
         Player nextPlayer = this.player == Player.PLAYER0 ? Player.PLAYER1 : Player.PLAYER0;
-        return new Game(this.board.updateCell(x, y, this.player), nextPlayer, newHistory);
+        Game newGame=new Game(this.board.updateCell(x, y, this.player), nextPlayer, newHistory);
+        if (newGame.getWinner()!=null){
+            Game newGame2 =new Game(this.board.updateCell(x, y, this.player), nextPlayer, newHistory, newGame.getWinner().value);
+            return newGame2;
+        }
+        return newGame;
     }
 
     public Player getWinner() {

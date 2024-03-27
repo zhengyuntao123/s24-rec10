@@ -118,7 +118,7 @@ class App extends React.Component<Props, GameState> {
      * @see https://reactjs.org/docs/introducing-jsx.html
      */
     let insturctionText;
-    if (this.state.winner){
+    if (this.state.winner!==null){
       insturctionText = `Player ${this.state.winner+1} wins!`
     } else{
       insturctionText = `Player ${this.state.currentPlayerId+1}'s turn` 
