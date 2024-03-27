@@ -6,12 +6,21 @@
 }
 
 .cell {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  font-size: 30px;
-  height: 25vmin;
+  background-color: rgba(255, 255, 255, 0.9); 
+  border: 2px solid rgba(0, 123, 255, 0.8); 
+  padding: 20px; 
+  font-size: 1.5rem; 
+  height: 20vmin;
   text-align: center;
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  transition: all 0.2s ease-in-out; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+  color: #212529; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  cursor: pointer; 
 }
 
 #bottombar {
@@ -20,13 +29,20 @@
 
 #instructions {
   height: 5vh;
-  background-color: white;
-  padding: 0px;
-  margin: 0px;
+  background-color: #f8f9fa; 
+  padding: 10px; 
+  margin: 10px auto; 
   text-align: center;
-  border: 1px solid black;
+  border: 1px solid #007bff; 
+  border-radius: 5px; 
+  font-size: 1rem; 
+  color: #212529; 
+  box-shadow: 0 2px 4px rgba(0,0,0,.1); 
+  font-family: Arial, sans-serif; 
 }
 
+
+/* #是id选择器的前缀，适用于id="" */
 #bottombar button {
   width: 50%;
   /* height: 100%; */
@@ -43,5 +59,5 @@ body {
   margin: 0;
   padding: 0;
 }
-
+/* .是类选择器的前缀 适用于class="" */
 .playable { background-color: red;}

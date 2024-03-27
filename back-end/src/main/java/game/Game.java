@@ -17,9 +17,10 @@ public class Game {
     private final Board board;
     private final Player player;
     private final List<Game> history;
+    private final Integer winner;
 
     public Game() {
-        this(new Board(), Player.PLAYER0);
+        this(new Board(), Player.PLAYER0, List.of(), null);
     }
 
     public Game(Board board, Player nextPlayer) {
@@ -30,6 +31,14 @@ public class Game {
         this.board = board;
         this.player = nextPlayer;
         this.history = history;
+        this.winner = null;
+    }
+
+    public Game(Board board, Player nextPlayer, List<Game> history, Integer winner) {
+        this.board = board;
+        this.player = nextPlayer;
+        this.history = history;
+        this.winner = winner;
     }
 
     public Board getBoard() {
@@ -40,11 +49,19 @@ public class Game {
         return this.player;
     }
 
+    public Integer getWinnerId(){
+        return this.winner;
+    }
+
+    public List<Game> getHistory(){
+        return this.history;
+    }
+    
     public Game play(int x, int y) {
         if (this.board.getCell(x, y) != null)
             return this;
         if (this.getWinner() != null)
-            return this;
+            return new Game(this.board,this.player,this.history,getWinner().value);
         List<Game> newHistory = new ArrayList<>(this.history);
         newHistory.add(this);
         Player nextPlayer = this.player == Player.PLAYER0 ? Player.PLAYER1 : Player.PLAYER0;

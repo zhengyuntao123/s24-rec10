@@ -25,7 +25,6 @@ interface Props { }
  */
 class App extends React.Component<Props, GameState> {
   private initialized: boolean = false;
-
   /**
    * @param props has type Props
    */
@@ -34,7 +33,7 @@ class App extends React.Component<Props, GameState> {
     /**
      * state has type GameState as specified in the class inheritance.
      */
-    this.state = { cells: [] }
+    this.state = { cells: [], currentPlayerId: 1, winner:null }
   }
 
   /**
@@ -45,9 +44,14 @@ class App extends React.Component<Props, GameState> {
   newGame = async () => {
     const response = await fetch('/newgame');
     const json = await response.json();
-    this.setState({ cells: json['cells'] });
+    this.setState({ cells: json['cells'],currentPlayerId: json['playerId'],winner:json['winner']});
   }
 
+  undo = async() => {
+    const response = await fetch('/undo');
+    const json = await response.json();
+    this.setState({ cells: json['cells'],currentPlayerId: json['playerId'],winner:json['winner']});
+  }
   /**
    * play will generate an anonymous function that the component
    * can bind with.
@@ -61,7 +65,7 @@ class App extends React.Component<Props, GameState> {
       e.preventDefault();
       const response = await fetch(`/play?x=${x}&y=${y}`)
       const json = await response.json();
-      this.setState({ cells: json['cells'] });
+      this.setState({ cells: json['cells'],currentPlayerId: json['playerId'],winner:json['winner']});
     }
   }
 
@@ -113,15 +117,24 @@ class App extends React.Component<Props, GameState> {
      * can treat HTML elements as code.
      * @see https://reactjs.org/docs/introducing-jsx.html
      */
+    let insturctionText;
+    if (this.state.winner){
+      insturctionText = `Player ${this.state.winner+1} wins!`
+    } else{
+      insturctionText = `Player ${this.state.currentPlayerId+1}'s turn` 
+    }
     return (
       <div>
+        <div id="instructions">
+          {insturctionText}
+        </div>
         <div id="board">
           {this.state.cells.map((cell, i) => this.createCell(cell, i))}
         </div>
         <div id="bottombar">
           <button onClick={/* get the function, not call the function */this.newGame}>New Game</button>
           {/* Exercise: implement Undo function */}
-          <button>Undo</button>
+          <button onClick={this.undo}>Undo</button>
         </div>
       </div>
     );
